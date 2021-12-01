@@ -13,7 +13,7 @@ const resolvers = {
       },
     },
 
-    Mutations: {
+    Mutation: {
         addUser: async (parent, args) => {
             const user = await User.create(args)
             const token = signToken(user);
@@ -26,13 +26,17 @@ const resolvers = {
                 throw new AuthenticationError('No user found')
             }
 
-            const correctPw = await user.isCorrectPassword(password);
+            const correctPW = await user.isCorrectPassword(password);
 
-            if (!correctPw) {
+            if (!correctPW) {
                 throw new AuthenticationError('Incorrect credentials');
               }
 
             const token = signToken(user);
             return {token , user};
-        }
-    }
+        },
+    },
+
+}
+
+    module.exports = resolvers
