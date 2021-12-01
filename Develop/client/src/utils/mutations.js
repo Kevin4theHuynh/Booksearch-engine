@@ -45,3 +45,13 @@ export const ADD_USER = gql`
         }
     }
 `
+
+export const REMOVE_BOOK = gql`
+    mutation removeBook($bookid: ID!) {
+        removeBook(bookId: $bookId) {
+            _id
+            username
+            email
+        }
+    }
+`
