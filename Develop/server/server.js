@@ -2,12 +2,16 @@ const express = require('express');
 const path = require('path');
 const db = require('./config/connection');
 const routes = require('./routes');
+const typeDefs = require("./schema/typeDefs");
+const resolvers = require("./schema/resolvers");
 const { ApolloServer } = require("apollo-server-express")
 const { autMiddleware } = require("./utils/auth");
-const { resolveGraphqlOptions } = require('apollo-server-core');
+
+
+const PORT = process.env.PORT || 3001;
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+
 
 const server = new ApolloServer({
   typeDefs,
@@ -15,7 +19,15 @@ const server = new ApolloServer({
   context: autMiddleware,
 })
 
-server.applyMiddleware({ app })
+
+
+let start = async function() {
+  // Your async task will execute with await
+  await server.start().then(r =>console.log("Server started!") )
+}
+ start()
+
+// server.applyMiddleware({ app })
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
